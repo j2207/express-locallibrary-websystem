@@ -173,7 +173,7 @@ exports.bookinstance_update_post = [
       const allBooks = await Book.find({}, "title").exec();
 
       res.render("bookinstance_form", {
-        title: "Update BookInstance",
+        title: "BookInstanceの更新",
         book_list: allBooks,
         selected_book: bookInstance.book._id,
         errors: errors.array(),
