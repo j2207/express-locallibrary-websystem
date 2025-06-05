@@ -1,17 +1,23 @@
 extends layout
+doctype html
+html(lang="ja")
+  head
+    meta(charset="UTF-8")
+    title= title
+    // ...existing code...
+  body
+　　block content
+  　　h1= title
+  　　p これは Mozilla Developer Network のチュートリアルで作成された、シンプルな Express Web アプリ「LocalLibrary」の例です。
 
-block content
-  h1= title
-  p Mozilla Developer Network のチュートリアル例として開発された非常に基本的な Express Web サイトである LocalLibrary へようこそ。
+ 　　 h1 ライブラリ情報
 
+ 　　 p 現在のライブラリには、以下のデータが登録されています。
 
-  h1 ダイナミックコンテンツ
+ 　　 ul
+ 　　   li #[strong 書籍数：] !{book_count}
+  　　  li #[strong 総冊数：] !{book_instance_count}
+  　　  li #[strong 貸出可能な冊数：] !{book_instance_available_count}
+  　　  li #[strong 著者数：] !{author_count}
+   　　 li #[strong ジャンル数：] !{genre_count}
 
-  p ライブラリには、次のレコード数があります。
-
-  ul
-    li #[strong 書籍:] !{book_count}
-    li #[strong 冊数:] !{book_instance_count}
-    li #[strong 貸出可能な冊数:] !{book_instance_available_count}
-    li #[strong 著者:] !{author_count}
-    li #[strong ジャンル:] !{genre_count}
