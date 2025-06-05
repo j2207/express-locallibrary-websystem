@@ -6,7 +6,7 @@ const asyncHandler = require("express-async-handler");
 
 // Display list of all BookInstances.
 exports.bookinstance_list = asyncHandler(async (req, res, next) => {
-  const allBookInstances = await BookInstance.find().populate("本").exec();
+  const allBookInstances = await BookInstance.find().populate("book").exec();
 
   res.render("bookinstance_list", {
     title: "ブックインスタンス一覧",
@@ -17,7 +17,7 @@ exports.bookinstance_list = asyncHandler(async (req, res, next) => {
 // Display detail page for a specific BookInstance.
 exports.bookinstance_detail = asyncHandler(async (req, res, next) => {
   const bookInstance = await BookInstance.findById(req.params.id)
-    .populate("本")
+    .populate("book")
     .exec();
 
   if (bookInstance === null) {
@@ -28,7 +28,7 @@ exports.bookinstance_detail = asyncHandler(async (req, res, next) => {
   }
 
   res.render("bookinstance_detail", {
-    title: "本:",
+    title: "book:",
     bookinstance: bookInstance,
   });
 });
