@@ -6,10 +6,10 @@ const asyncHandler = require("express-async-handler");
 
 // Display list of all BookInstances.
 exports.bookinstance_list = asyncHandler(async (req, res, next) => {
-  const allBookInstances = await BookInstance.find().populate("book").exec();
+  const allBookInstances = await BookInstance.find().populate("本").exec();
 
   res.render("bookinstance_list", {
-    title: "Book Instance List",
+    title: "ブックインスタンス一覧",
     bookinstance_list: allBookInstances,
   });
 });
@@ -17,28 +17,28 @@ exports.bookinstance_list = asyncHandler(async (req, res, next) => {
 // Display detail page for a specific BookInstance.
 exports.bookinstance_detail = asyncHandler(async (req, res, next) => {
   const bookInstance = await BookInstance.findById(req.params.id)
-    .populate("book")
+    .populate("本")
     .exec();
 
   if (bookInstance === null) {
     // No results.
-    const err = new Error("Book copy not found");
+    const err = new Error("書籍のコピーが見つかりません");
     err.status = 404;
     return next(err);
   }
 
   res.render("bookinstance_detail", {
-    title: "Book:",
+    title: "本:",
     bookinstance: bookInstance,
   });
 });
 
 // Display BookInstance create form on GET.
 exports.bookinstance_create_get = asyncHandler(async (req, res, next) => {
-  const allBooks = await Book.find({}, "title").sort({ title: 1 }).exec();
+  const allBooks = await Book.find({}, "タイトル").sort({ title: 1 }).exec();
 
   res.render("bookinstance_form", {
-    title: "Create BookInstance",
+    title: "BookInstanceの作成",
     book_list: allBooks,
   });
 });
@@ -46,14 +46,14 @@ exports.bookinstance_create_get = asyncHandler(async (req, res, next) => {
 // Handle BookInstance create on POST.
 exports.bookinstance_create_post = [
   // Validate and sanitize fields.
-  body("book", "Book must be specified").trim().isLength({ min: 1 }).escape(),
-  body("imprint", "Imprint must be specified")
+  body("本", "書籍の指定が必要").trim().isLength({ min: 1 }).escape(),
+  body("インプリント", "インプリントの指定が必要")
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  body("status").escape(),
-  body("due_back", "Invalid date")
-    .optional({ values: "falsy" })
+  body("ステータス").escape(),
+  body("デュー・バック", "無効な日付")
+    .optional({ values: "ファシー" })
     .isISO8601()
     .toDate(),
 
@@ -76,7 +76,7 @@ exports.bookinstance_create_post = [
       const allBooks = await Book.find({}, "title").sort({ title: 1 }).exec();
 
       res.render("bookinstance_form", {
-        title: "Create BookInstance",
+        title: "BookInstanceの作成",
         book_list: allBooks,
         selected_book: bookInstance.book._id,
         errors: errors.array(),
@@ -94,7 +94,7 @@ exports.bookinstance_create_post = [
 // Display BookInstance delete form on GET.
 exports.bookinstance_delete_get = asyncHandler(async (req, res, next) => {
   const bookInstance = await BookInstance.findById(req.params.id)
-    .populate("book")
+    .populate("本")
     .exec();
 
   if (bookInstance === null) {
@@ -103,7 +103,7 @@ exports.bookinstance_delete_get = asyncHandler(async (req, res, next) => {
   }
 
   res.render("bookinstance_delete", {
-    title: "Delete BookInstance",
+    title: "BookInstanceの削除",
     bookinstance: bookInstance,
   });
 });
@@ -119,19 +119,19 @@ exports.bookinstance_delete_post = asyncHandler(async (req, res, next) => {
 exports.bookinstance_update_get = asyncHandler(async (req, res, next) => {
   // Get book, all books for form (in parallel)
   const [bookInstance, allBooks] = await Promise.all([
-    BookInstance.findById(req.params.id).populate("book").exec(),
+    BookInstance.findById(req.params.id).populate("本").exec(),
     Book.find(),
   ]);
 
   if (bookInstance === null) {
     // No results.
-    const err = new Error("Book copy not found");
+    const err = new Error("BookInstanceの削除");
     err.status = 404;
     return next(err);
   }
 
   res.render("bookinstance_form", {
-    title: "Update BookInstance",
+    title: "BookInstanceの更新",
     book_list: allBooks,
     selected_book: bookInstance.book._id,
     bookinstance: bookInstance,
@@ -141,14 +141,14 @@ exports.bookinstance_update_get = asyncHandler(async (req, res, next) => {
 // Handle BookInstance update on POST.
 exports.bookinstance_update_post = [
   // Validate and sanitize fields.
-  body("book", "Book must be specified").trim().isLength({ min: 1 }).escape(),
-  body("imprint", "Imprint must be specified")
+  body("本", "書籍の指定が必要").trim().isLength({ min: 1 }).escape(),
+  body("インプリント", "インプリントの指定が必要")
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  body("status").escape(),
-  body("due_back", "Invalid date")
-    .optional({ values: "falsy" })
+  body("ステータス").escape(),
+  body("デュー・バック", "無効な日付")
+    .optional({ values: "ファシー" })
     .isISO8601()
     .toDate(),
 
@@ -170,7 +170,7 @@ exports.bookinstance_update_post = [
       // There are errors.
       // Render the form again, passing sanitized values and errors.
 
-      const allBooks = await Book.find({}, "title").exec();
+      const allBooks = await Book.find({}, "タイトル").exec();
 
       res.render("bookinstance_form", {
         title: "BookInstanceの更新",
