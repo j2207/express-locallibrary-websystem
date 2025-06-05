@@ -94,7 +94,7 @@ exports.bookinstance_create_post = [
 // Display BookInstance delete form on GET.
 exports.bookinstance_delete_get = asyncHandler(async (req, res, next) => {
   const bookInstance = await BookInstance.findById(req.params.id)
-    .populate("本")
+    .populate("book")
     .exec();
 
   if (bookInstance === null) {
@@ -119,7 +119,7 @@ exports.bookinstance_delete_post = asyncHandler(async (req, res, next) => {
 exports.bookinstance_update_get = asyncHandler(async (req, res, next) => {
   // Get book, all books for form (in parallel)
   const [bookInstance, allBooks] = await Promise.all([
-    BookInstance.findById(req.params.id).populate("本").exec(),
+    BookInstance.findById(req.params.id).populate("book").exec(),
     Book.find(),
   ]);
 
