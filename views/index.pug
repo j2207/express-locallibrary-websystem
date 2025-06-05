@@ -1,17 +1,17 @@
 extends layout
 
-　　block content
-  　　h1= title
-  　　p これは Mozilla Developer Network のチュートリアルで作成された、シンプルな Express Web アプリ「LocalLibrary」の例です。
+block content
+  h1= title
+  p これは Mozilla Developer Network のチュートリアルで作成された、シンプルな Express Web アプリ「LocalLibrary」の例です。
 
- 　　 h1 ライブラリ情報
+  h1 ライブラリ情報
 
- 　　 p 現在のライブラリには、以下のデータが登録されています。
+  p 現在のライブラリには、以下のデータが登録されています。
 
- 　　 ul
- 　　   li #[strong 書籍数：] !{book_count}
-  　　  li #[strong 総冊数：] !{book_instance_count}
-  　　  li #[strong 貸出可能な冊数：] !{book_instance_available_count}
-  　　  li #[strong 著者数：] !{author_count}
-   　　 li #[strong ジャンル数：] !{genre_count}
+  ul
+    li #[strong 書籍数：] !{book_count}
+    li #[strong 総冊数：] !{book_instance_count}
+    li #[strong 貸出可能な冊数：] !{book_instance_available_count}
+    li #[strong 著者数：] !{author_count}
+   li #[strong ジャンル数：] !{genre_count}
 
